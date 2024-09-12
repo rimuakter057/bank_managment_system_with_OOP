@@ -13,13 +13,16 @@ class DepositPage extends StatefulWidget {
   State<DepositPage> createState() => _DepositPageState();
 }
 
-
-
-initState(){
-
-}
-
 class _DepositPageState extends State<DepositPage> {
+  final TextEditingController firstDepositController = TextEditingController();
+  double balance=0;
+  @override
+  void initState() {
+    balance =widget.firstMainBalance;
+    // TODO: implement initState
+    super.initState();
+  }
+
   final key = GlobalKey<FormState>();
   TextEditingController depositController = TextEditingController();
 
@@ -27,8 +30,7 @@ class _DepositPageState extends State<DepositPage> {
    double depositAmount =0;
 // add money for deposit
   setDepositAmount() {
-    double depositAmounts = double.parse(depositController.text.toString());
-    UserInformation userInformation = UserInformation("Rimu", 5, depositAmounts  );
+    UserInformation userInformation = UserInformation("Rimu", 5, balance  );
      depositAmount = double.parse(depositController.text.toString());
     double data = userInformation.deposit(depositAmount) ?? 0;
     print(data);
@@ -101,9 +103,9 @@ class _DepositPageState extends State<DepositPage> {
               child: ElevatedButton(
                   onPressed: () {
                     var isValid = key.currentState!.validate();
-                    double ammount=double.parse(depositController.text);
+                    double amount=double.parse(depositController.text);
                     print(depositAmount);
-                    if (isValid && ammount  > 0 ) {
+                    if (isValid && amount  > 0 ) {
                       setDepositAmount( );
                     } else {
                       print("error");
@@ -145,7 +147,6 @@ class _DepositPageState extends State<DepositPage> {
                       ),
 
                       Text(
-
                       depositList.last.toString(),
                         style: const TextStyle(fontSize: 20),
                       ),

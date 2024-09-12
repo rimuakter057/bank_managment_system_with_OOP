@@ -14,6 +14,7 @@ class FirstDepositPage extends StatefulWidget {
 class _FirstDepositPageState extends State<FirstDepositPage> {
   bool isActive = false;
   final TextEditingController firstDepositController = TextEditingController();
+  double balance=0;
 
 
   final key = GlobalKey<FormState>();

@@ -13,10 +13,11 @@ class WithdrawPage extends StatefulWidget {
 class _WithdrawPageState extends State<WithdrawPage> {
   TextEditingController withDrawController = TextEditingController();
   final key = GlobalKey<FormState>();
-  List<double> withDrawList = [];
+  List<double> withDrawList = [0];
+  double withdrawAmount=0;
   setWithdrawAmount() {
     UserInformation userInput = UserInformation("Rimu", 33, 700);
-    double withdrawAmount = double.parse(withDrawController.text.toString());
+    withdrawAmount = double.parse(withDrawController.text.toString());
     double withdrawData = userInput.withdraw(withdrawAmount);
     print(withdrawData);
     withDrawList.add(withdrawData);
@@ -74,9 +75,12 @@ class _WithdrawPageState extends State<WithdrawPage> {
                 child: ElevatedButton(
                     onPressed: () {
                       var isValid = key.currentState!.validate();
-                      if (isValid) {
+                      double myAmount = double.parse(withDrawController.text);
+                      if (isValid && myAmount<700) {
                         setWithdrawAmount();
-                      } else {
+                      } else if (myAmount <0) {
+                        print("Please Enter Positive Amount");
+                      }else{
                         print("error");
                       }
                     },
@@ -110,7 +114,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
                         const CommonText(text: 'Your new amount',fontSize: 30,),
                      //  Text( withDrawController.toString()),
                         Text(
-                          withDrawList.toList().toString(),
+                          withDrawList.last.toString(),
                           style: const TextStyle(fontSize: 20),
                         ),
                       ],
